@@ -4,7 +4,12 @@ let client
 
 
 const connectRedis = async () => {
-    client = redis.createClient(process.env.REDIS_HOST)
+    client = redis.createClient({
+        socket: {
+            port: process.env.REDIS_PORT,
+            host: process.env.REDIS_HOST
+        }
+    })
     await client.connect()
 }
 
