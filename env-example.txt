@@ -1,0 +1,5 @@
+PORT=8000
+API_SECRET=insert-api-secret
+DB_HOST=mongodb://{db-host}:{db-port}/db_hamid_betest
+REDIS_HOST=redis
+REDIS_PORT={redis-port}
