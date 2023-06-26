@@ -1,0 +1,48 @@
+version: "3"
+
+networks:
+  betest-network:
+
+
+services:
+  betest_app:
+    container_name: betest_app
+    image: betest_img
+    build: .
+    ports: 
+      - 8000:8000
+    environment:
+      PORT: ${PORTS}
+      API_SECRET: ${API_SECRET}
+      DB_HOST: ${DB_HOST}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - betest-network
+  
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    ports: 
+      - 27017:27017
+    volumes:
+      - dbvol:/data/db
+    networks:
+      - betest-network
+  
+  redis:
+    image: redis:latest
+    container_name: redis
+    command: redis-server
+    restart: always
+    ports: 
+      - 6379:6379
+    networks:
+      - betest-network
+    
+volumes:
+  dbvol:
